@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport"
+		  content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>Document</title>
+	<style>
+		body {
+			font-family: Roboto, sans-serif;
+		}
+	</style>
+</head>
+<body>
+	<section style="display: flex; flex-direction: column; align-items: center;">
+		<h1>Subscribe to random stuff!</h1>
+		<h2>The future of random is now!</h2>
+		<ul>
+			<li>Random daily spam emails</li>
+			<li>AI Slop articles</li>
+			<li>Silly images of huskies!</li>
+		</ul>
+		<div class="form-container" style="padding: 5px; background: navajowhite;">
+			<form id="form" style="display: flex; flex-direction: column; row-gap: 5px;">
+
+				Name:
+				<input type="text" id="name" name="name" placeholder="John Smith">
+				<label for="name"></label>
+
+				Email:
+				<input type="email" id="email" name="email" placeholder="name@example.com">
+				<label for="email"></label>
+
+				Message:
+				<textarea id="message" name="message" placeholder="message" rows="5" cols="50" style="resize: none;"></textarea>
+				<label for="message"></label>
+
+				<div class="submit-container" style="display: flex; align-items: center; padding: 10px 0;">
+					<button id="submit" type="submit" style="border: none; font-size: 16px; padding: 4px 8px; cursor: pointer; background: greenyellow;">Subscribe</button>
+				</div>
+			</form>
+		</div>
+
+	</section>
+
+	<script>
+		const form = document.getElementById("form");
+		form.addEventListener("submit", (e) => {
+			e.preventDefault();
+
+			const formData = Object.fromEntries(new FormData(form));
+
+			fetch("/submissions", {
+				method: "post",
+				headers: {
+					'Content-Type': 'application/json; charset=UTF-8' // Declare the content type
+				},
+				body: JSON.stringify(formData)
+			});
+		});
+	</script>
+</body>
+</html>
