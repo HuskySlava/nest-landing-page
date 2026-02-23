@@ -4,6 +4,7 @@ import { AppService } from "./app.service";
 import { ConfigModule } from "@nestjs/config";
 import { ServeStaticModule } from "@nestjs/serve-static";
 import { join } from "path";
+import { SubmissionModule } from "./submission/submission.module";
 
 @Module({
 	imports: [
@@ -14,10 +15,9 @@ import { join } from "path";
 			rootPath: join(__dirname, "..", "..", "public"),
 			serveRoot: "/",
 		}),
+		SubmissionModule,
 	],
 	controllers: [AppController],
 	providers: [AppService],
 })
-export class AppModule {
-
-}
+export class AppModule {}
