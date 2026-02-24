@@ -6,12 +6,24 @@ import { ServeStaticModule } from "@nestjs/serve-static";
 import { join } from "path";
 import { SubmissionModule } from "./submission/submission.module";
 import { formConfig } from "./config/form.config";
+import { APP_GUARD } from "@nestjs/core";
+import { ThrottlerGuard, ThrottlerModule } from "@nestjs/throttler";
+import { ConfigService } from "@nestjs/config";
 
 @Module({
 	imports: [
 		ConfigModule.forRoot({
 			isGlobal: true,
 			load: [formConfig],
+		}),
+		ThrottlerModule.forRootAsync({
+			useFactory: (configService: ConfigService) => [
+				{
+					ttl: configService.get<number>("THROTTLE_TTL")!,
+					limit: configService.get<number>("THROTTLE_LIMIT")!,
+				},
+			],
+			inject: [ConfigService],
 		}),
 		ServeStaticModule.forRoot({
 			rootPath: join(__dirname, "..", "..", "public"),
@@ -20,6 +32,12 @@ import { formConfig } from "./config/form.config";
 		SubmissionModule,
 	],
 	controllers: [AppController],
-	providers: [AppService],
+	providers: [
+		AppService,
+		{
+			provide: APP_GUARD,
+			useClass: ThrottlerGuard,
+		},
+	],
 })
 export class AppModule {}
