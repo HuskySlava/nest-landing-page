@@ -68,7 +68,7 @@ export class SubmissionValidationPipe implements PipeTransform {
 				);
 			}
 
-			result[field.name] = value;
+			result[field.name] = this.sanitize(value);
 		}
 
 		if (errors.length > 0) {
@@ -76,5 +76,9 @@ export class SubmissionValidationPipe implements PipeTransform {
 		}
 
 		return result;
+	}
+
+	private sanitize(value: string): string {
+		return value.replace(/<[^>]*>/g, '').trim();
 	}
 }
