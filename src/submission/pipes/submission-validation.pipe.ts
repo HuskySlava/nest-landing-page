@@ -1,6 +1,6 @@
 import { BadRequestException, Injectable, PipeTransform } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
-import { FormConfig } from "../config/form.config";
+import { FormConfig, FormFieldConfig } from "../../config/form.config";
 
 export type SubmissionData = Record<string, string>;
 
@@ -14,7 +14,9 @@ export class SubmissionValidationPipe implements PipeTransform {
 		}
 
 		const input = body as Record<string, unknown>;
-		const { fields } = this.configService.get<FormConfig>("form")!;
+		const fields: FormFieldConfig[] = (
+			this.configService.get("form") as FormConfig
+		).fields;
 		const errors: string[] = [];
 		const result: SubmissionData = {};
 
@@ -79,6 +81,6 @@ export class SubmissionValidationPipe implements PipeTransform {
 	}
 
 	private sanitize(value: string): string {
-		return value.replace(/<[^>]*>/g, '').trim();
+		return value.replace(/<[^>]*>/g, "").trim();
 	}
 }
