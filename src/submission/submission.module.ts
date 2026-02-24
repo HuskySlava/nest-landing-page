@@ -1,7 +1,7 @@
 import { Module } from "@nestjs/common";
 import { SubmissionController } from "./submission.controller";
 import { SubmissionService } from "./submission.service";
-import { SubmissionValidationPipe } from "./submission-validation.pipe";
+import { SubmissionValidationPipe } from "./pipes/submission-validation.pipe";
 
 @Module({
 	controllers: [SubmissionController],
