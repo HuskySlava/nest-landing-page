@@ -1,7 +1,9 @@
 import { Body, Controller, HttpCode, Post, UsePipes } from "@nestjs/common";
 import { SubmissionService } from "./submission.service";
-import { SubmissionValidationPipe } from "./submission-validation.pipe";
-import type { SubmissionData } from "./submission-validation.pipe"
+import {
+	SubmissionValidationPipe,
+	type SubmissionData,
+} from "./pipes/submission-validation.pipe";
 
 @Controller("submissions")
 export class SubmissionController {
