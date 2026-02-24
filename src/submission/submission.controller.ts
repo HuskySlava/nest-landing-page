@@ -1,6 +1,7 @@
-import { Body, Controller, HttpCode, Post } from "@nestjs/common";
+import { Body, Controller, HttpCode, Post, UsePipes } from "@nestjs/common";
 import { SubmissionService } from "./submission.service";
-import { CreateSubmissionDto } from "./dto/create-submission.dto";
+import { SubmissionValidationPipe } from "./submission-validation.pipe";
+import type { SubmissionData } from "./submission-validation.pipe"
 
 @Controller("submissions")
 export class SubmissionController {
@@ -8,7 +9,8 @@ export class SubmissionController {
 
 	@Post()
 	@HttpCode(201)
-	create(@Body() dto: CreateSubmissionDto): object {
-		return this.submissionService.create(dto);
+	@UsePipes(SubmissionValidationPipe)
+	create(@Body() data: SubmissionData): object {
+		return this.submissionService.create(data);
 	}
 }

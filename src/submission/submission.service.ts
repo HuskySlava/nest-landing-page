@@ -1,9 +1,9 @@
 import { Injectable } from "@nestjs/common";
-import { CreateSubmissionDto } from "./dto/create-submission.dto";
+import { SubmissionData } from "./submission-validation.pipe";
 
 @Injectable()
 export class SubmissionService {
-	create(dto: CreateSubmissionDto) {
+	create(dto: SubmissionData) {
 		console.log("Received submission", dto);
 		return { success: true };
 	}
