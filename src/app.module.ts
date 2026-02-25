@@ -9,6 +9,7 @@ import { formConfig } from "./config/form.config";
 import { APP_GUARD } from "@nestjs/core";
 import { ThrottlerGuard, ThrottlerModule } from "@nestjs/throttler";
 import { ConfigService } from "@nestjs/config";
+import { GoogleSheetsModule } from './google-sheets/google-sheets.module';
 
 @Module({
 	imports: [
@@ -30,6 +31,7 @@ import { ConfigService } from "@nestjs/config";
 			serveRoot: "/",
 		}),
 		SubmissionModule,
+		GoogleSheetsModule,
 	],
 	controllers: [AppController],
 	providers: [
