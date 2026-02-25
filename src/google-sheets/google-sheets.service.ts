@@ -31,7 +31,7 @@ export class GoogleSheetsService implements OnModuleInit {
 		await this.sheets.spreadsheets.values.append({
 			spreadsheetId,
 			range: sheetName,
-			valueInputOption: "raw",
+			valueInputOption: "RAW",
 			requestBody: { values: [values] },
 		});
 	}
