@@ -2,62 +2,354 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
-	<meta name="viewport"
-		  content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta http-equiv="X-UA-Compatible" content="ie=edge">
 	<title>Subscribe to random stuff!</title>
 	<style>
+		@import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Orbitron:wght@700;900&display=swap');
+
+		*, *::before, *::after {
+			box-sizing: border-box;
+			margin: 0;
+			padding: 0;
+		}
+
+		:root {
+			--cyan: #00ffe7;
+			--pink: #ff2d78;
+			--yellow: #ffe600;
+			--bg: #080810;
+			--surface: #0d0d1a;
+			--border: #1a1a3a;
+		}
+
 		body {
-			font-family: Roboto, sans-serif;
+			font-family: 'Share Tech Mono', monospace;
+			background: var(--bg);
+			color: #c0c0d0;
+			min-height: 100vh;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			padding: 2rem;
+			overflow-x: hidden;
+		}
+
+		body::before {
+			content: '';
+			position: fixed;
+			inset: 0;
+			background:
+				repeating-linear-gradient(
+					0deg,
+					transparent,
+					transparent 2px,
+					rgba(0, 255, 231, 0.015) 2px,
+					rgba(0, 255, 231, 0.015) 4px
+				);
+			pointer-events: none;
+			z-index: 0;
+		}
+
+		.page {
+			max-width: 540px;
+			width: 100%;
+			position: relative;
+			z-index: 1;
+		}
+
+		.hero {
+			margin-bottom: 2.5rem;
+		}
+
+		.glitch {
+			font-family: 'Orbitron', sans-serif;
+			font-size: 2.2rem;
+			font-weight: 900;
+			color: var(--cyan);
+			text-transform: uppercase;
+			letter-spacing: 0.05em;
+			position: relative;
+			line-height: 1.1;
+			margin-bottom: 0.75rem;
+			text-shadow:
+				0 0 8px var(--cyan),
+				0 0 24px rgba(0, 255, 231, 0.4);
+		}
+
+		.glitch::before,
+		.glitch::after {
+			content: attr(data-text);
+			position: absolute;
+			top: 0; left: 0;
+			width: 100%;
+		}
+
+		.glitch::before {
+			color: var(--pink);
+			animation: glitch-top 3s infinite;
+			clip-path: polygon(0 0, 100% 0, 100% 35%, 0 35%);
+			text-shadow: none;
+		}
+
+		.glitch::after {
+			color: var(--yellow);
+			animation: glitch-bot 3s infinite;
+			clip-path: polygon(0 65%, 100% 65%, 100% 100%, 0 100%);
+			text-shadow: none;
+		}
+
+		@keyframes glitch-top {
+			0%, 90%, 100% { transform: translate(0); opacity: 0; }
+			92% { transform: translate(-3px, -1px); opacity: 1; }
+			94% { transform: translate(3px, 1px); opacity: 1; }
+			96% { transform: translate(0); opacity: 0; }
+		}
+
+		@keyframes glitch-bot {
+			0%, 90%, 100% { transform: translate(0); opacity: 0; }
+			93% { transform: translate(3px, 1px); opacity: 1; }
+			95% { transform: translate(-3px, -1px); opacity: 1; }
+			97% { transform: translate(0); opacity: 0; }
+		}
+
+		.tagline {
+			color: var(--pink);
+			font-size: 0.85rem;
+			letter-spacing: 0.15em;
+			text-transform: uppercase;
+			margin-bottom: 1.5rem;
+			text-shadow: 0 0 8px var(--pink);
+		}
+
+		.perks {
+			list-style: none;
+			display: flex;
+			flex-direction: column;
+			gap: 0.5rem;
+			font-size: 0.85rem;
+			color: #7070a0;
+		}
+
+		.perks li::before {
+			content: '> ';
+			color: var(--cyan);
+		}
+
+		.card {
+			background: var(--surface);
+			border: 1px solid var(--border);
+			border-top: 2px solid var(--cyan);
+			padding: 2rem;
+			position: relative;
+			box-shadow:
+				0 0 0 1px rgba(0, 255, 231, 0.05),
+				0 0 40px rgba(0, 255, 231, 0.05),
+				inset 0 0 40px rgba(0, 0, 0, 0.4);
+		}
+
+		.card::before {
+			content: '[ UPLINK_FORM_v2.4 ]';
+			position: absolute;
+			top: -0.65rem;
+			left: 1.5rem;
+			background: var(--surface);
+			padding: 0 0.5rem;
+			font-size: 0.7rem;
+			color: var(--cyan);
+			letter-spacing: 0.1em;
+		}
+
+		.card::after {
+			content: '';
+			position: absolute;
+			bottom: 0; right: 0;
+			width: 24px; height: 24px;
+			border-bottom: 2px solid var(--pink);
+			border-right: 2px solid var(--pink);
+		}
+
+		.form-group {
+			margin-bottom: 1.25rem;
+		}
+
+		label {
+			display: block;
+			font-size: 0.75rem;
+			letter-spacing: 0.12em;
+			text-transform: uppercase;
+			color: var(--cyan);
+			margin-bottom: 0.4rem;
+		}
+
+		input, textarea {
+			width: 100%;
+			padding: 0.625rem 0.875rem;
+			background: rgba(0, 255, 231, 0.03);
+			border: 1px solid #1e1e3f;
+			border-left: 2px solid var(--cyan);
+			color: #e0e0f0;
+			font-family: 'Share Tech Mono', monospace;
+			font-size: 0.9rem;
+			outline: none;
+			transition: border-color 0.2s, box-shadow 0.2s, background 0.2s;
+		}
+
+		input:focus, textarea:focus {
+			background: rgba(0, 255, 231, 0.06);
+			border-color: var(--cyan);
+			box-shadow: 0 0 12px rgba(0, 255, 231, 0.15);
+		}
+
+		input::placeholder, textarea::placeholder {
+			color: #2e2e4e;
+		}
+
+		textarea {
+			resize: none;
+			height: 100px;
+		}
+
+		button[type="submit"] {
+			width: 100%;
+			padding: 0.8rem;
+			background: transparent;
+			color: var(--cyan);
+			border: 1px solid var(--cyan);
+			font-family: 'Orbitron', sans-serif;
+			font-size: 0.85rem;
+			font-weight: 700;
+			letter-spacing: 0.2em;
+			text-transform: uppercase;
+			cursor: pointer;
+			position: relative;
+			overflow: hidden;
+			transition: color 0.2s, box-shadow 0.2s;
+			margin-top: 0.5rem;
+		}
+
+		button[type="submit"]::before {
+			content: '';
+			position: absolute;
+			inset: 0;
+			background: var(--cyan);
+			transform: translateX(-100%);
+			transition: transform 0.25s ease;
+			z-index: 0;
+		}
+
+		button[type="submit"]:hover::before {
+			transform: translateX(0);
+		}
+
+		button[type="submit"]:hover {
+			color: var(--bg);
+			box-shadow: 0 0 24px rgba(0, 255, 231, 0.4);
+		}
+
+		button[type="submit"] span {
+			position: relative;
+			z-index: 1;
+		}
+
+		button[type="submit"]:disabled {
+			border-color: #1e1e3f;
+			color: #2e2e4e;
+			cursor: not-allowed;
+		}
+
+		button[type="submit"]:disabled::before {
+			display: none;
+		}
+
+		.status {
+			margin-top: 1rem;
+			font-size: 0.8rem;
+			letter-spacing: 0.08em;
+			text-align: center;
+			min-height: 1.25rem;
+		}
+
+		.status.success {
+			color: var(--cyan);
+			text-shadow: 0 0 8px var(--cyan);
+		}
+
+		.status.error {
+			color: var(--pink);
+			text-shadow: 0 0 8px var(--pink);
 		}
 	</style>
 </head>
 <body>
-	<section style="display: flex; flex-direction: column; align-items: center;">
-		<h1>Subscribe to random stuff!</h1>
-		<h2>The future of random is now!</h2>
-		<ul>
-			<li>Random daily spam emails</li>
-			<li>AI Slop articles</li>
-			<li>Silly images of huskies!</li>
-		</ul>
-		<div class="form-container" style="padding: 5px; background: navajowhite;">
-			<form id="form" style="display: flex; flex-direction: column; row-gap: 5px;">
-
-				Name:
-				<input type="text" id="name" name="name" placeholder="John Smith">
-				<label for="name"></label>
-
-				Email:
-				<input type="email" id="email" name="email" placeholder="name@example.com">
-				<label for="email"></label>
-
-				Message:
-				<textarea id="message" name="message" placeholder="message" rows="5" cols="50" style="resize: none;"></textarea>
-				<label for="message"></label>
-
-				<div class="submit-container" style="display: flex; align-items: center; padding: 10px 0;">
-					<button id="submit" type="submit" style="border: none; font-size: 16px; padding: 4px 8px; cursor: pointer; background: greenyellow;">Subscribe</button>
-				</div>
-			</form>
+	<div class="page">
+		<div class="hero">
+			<h1 class="glitch" data-text="SUBSCRIBE TO RANDOM STUFF">SUBSCRIBE TO RANDOM STUFF</h1>
+			<p class="tagline">// The future of random is now</p>
+			<ul class="perks">
+				<li>Random daily spam emails</li>
+				<li>AI Slop articles</li>
+				<li>Silly images of huskies!</li>
+			</ul>
 		</div>
 
-	</section>
+		<div class="card">
+			<form id="form">
+				<div class="form-group">
+					<label for="name">_name</label>
+					<input type="text" id="name" name="name" placeholder="John Smith">
+				</div>
+
+				<div class="form-group">
+					<label for="email">_email</label>
+					<input type="email" id="email" name="email" placeholder="name@example.com">
+				</div>
+
+				<div class="form-group">
+					<label for="message">_message</label>
+					<textarea id="message" name="message" placeholder="// say something..."></textarea>
+				</div>
+
+				<button type="submit" id="submit"><span>[ TRANSMIT ]</span></button>
+				<div class="status" id="status"></div>
+			</form>
+		</div>
+	</div>
 
 	<script>
 		const form = document.getElementById("form");
-		form.addEventListener("submit", (e) => {
+		const btn = document.getElementById("submit");
+		const status = document.getElementById("status");
+
+		form.addEventListener("submit", async (e) => {
 			e.preventDefault();
+			btn.disabled = true;
+			status.textContent = "";
+			status.className = "status";
 
 			const formData = Object.fromEntries(new FormData(form));
 
-			fetch("/submissions", {
-				method: "post",
-				headers: {
-					'Content-Type': 'application/json; charset=UTF-8' // Declare the content type
-				},
-				body: JSON.stringify(formData)
-			});
+			try {
+				const res = await fetch("/submissions", {
+					method: "POST",
+					headers: { "Content-Type": "application/json; charset=UTF-8" },
+					body: JSON.stringify(formData)
+				});
+
+				if (res.ok) {
+					status.textContent = "> uplink established. chaos incoming.";
+					status.className = "status success";
+					form.reset();
+				} else {
+					status.textContent = "> transmission failed. try again.";
+					status.className = "status error";
+				}
+			} catch {
+				status.textContent = "> network unreachable.";
+				status.className = "status error";
+			} finally {
+				btn.disabled = false;
+			}
 		});
 	</script>
 </body>
