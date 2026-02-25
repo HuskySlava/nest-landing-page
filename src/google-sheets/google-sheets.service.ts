@@ -18,4 +18,20 @@ export class GoogleSheetsService implements OnModuleInit {
 		this.sheets = google.sheets({ version: "v4", auth });
 		this.logger.log("Google Sheets Service initialized");
 	}
+
+	async appendRow(values: string[]): Promise<void> {
+		const spreadsheetId = this.configService.get<string>(
+			"GOOGLE_SPREADSHEET_ID",
+		);
+		const sheetName = this.configService.get<string>(
+			"GOOGLE_SPREADSHEET_ID",
+		);
+
+		await this.sheets.spreadsheets.values.append({
+			spreadsheetId,
+			range: sheetName,
+			valueInputOption: "raw",
+			requestBody: { values: [values] },
+		});
+	}
 }
