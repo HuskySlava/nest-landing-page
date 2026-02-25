@@ -17,9 +17,6 @@ export class GoogleSheetsService implements OnModuleInit {
 		});
 		this.sheets = google.sheets({ version: "v4", auth });
 		this.logger.log("Google Sheets Service initialized");
-
-		// Integration test
-		await this.appendRow(["test", "integration", "works"]);
 	}
 
 	async appendRow(values: string[]): Promise<void> {
