@@ -41,7 +41,6 @@ import { BullModule } from "@nestjs/bullmq";
 			serveRoot: "/",
 		}),
 		SubmissionModule,
-		GoogleSheetsModule,
 	],
 	controllers: [AppController],
 	providers: [
