@@ -7,7 +7,9 @@ import { SHEETS_QUEUE } from "../constants/queues";
 	limiter: { max: 1, duration: 1500 },
 })
 export class SheetsProcessor extends WorkerHost {
-	constructor(private readonly googleSheetsService: GoogleSheetsService) {}
+	constructor(private readonly googleSheetsService: GoogleSheetsService) {
+		super();
+	}
 
 	async process(job: Job<{ values: string[] }>): Promise<void> {
 		await this.googleSheetsService.appendRow(job.data.values);
