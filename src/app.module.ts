@@ -30,8 +30,8 @@ import { BullModule } from "@nestjs/bullmq";
 		BullModule.forRootAsync({
 			useFactory: (configService: ConfigService) => ({
 				connection: {
-					host: configService.get<string>('REDIS_HOST'),
-					port: configService.get<number>('REDIS_PORT'),
+					host: configService.get<string>("REDIS_HOST"),
+					port: configService.get<number>("REDIS_PORT"),
 				},
 			}),
 			inject: [ConfigService],

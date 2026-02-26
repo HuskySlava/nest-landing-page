@@ -1,5 +1,5 @@
 import { Module } from "@nestjs/common";
-import { GoogleSheetsService } from './google-sheets.service';
+import { GoogleSheetsService } from "./google-sheets.service";
 
 @Module({
 	providers: [GoogleSheetsService],
